@@ -1,12 +1,19 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { SearchingPage2 } from "./pages/SearchingPage/SearchingPage2";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SearchingPage } from "./pages/SearchingPage/SearchingPage";
+import { ReposPage } from "./pages/ReposPage/ReposPage";
+import { Layout } from "./components/Layout/Layout";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <SearchingPage2 />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<SearchingPage />} />
+            <Route path="repos" element={<ReposPage />} />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </div>
   );

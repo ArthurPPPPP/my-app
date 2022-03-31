@@ -1,16 +1,11 @@
-import React, { FC,FormEventHandler } from "react";
-import { SearchInput } from "../SearchInput/SearchInput";
+import React, { FC } from "react";
 
-interface props {
-  handleSubmit: FormEventHandler;
-  inputValue: string | null;
-}
+import styles from "./header.module.scss";
 
-export const Header: FC<props> = ({ handleSubmit, inputValue }) => {
+export const Header: FC = () => {
   return (
-    <div>
-      Header
-      <SearchInput handleSubmit={handleSubmit} inputValue={inputValue} />
-    </div>
+    <header className={styles.header}>
+      <h1>GitHub Searcher</h1>
+    </header>
   );
 };

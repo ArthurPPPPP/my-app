@@ -1,4 +1,4 @@
-export async function fetchUsers(url: string) {
+export async function fetchData(url: string) {
   const response = await fetch(url, {
     headers: {
       Authorization: "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",

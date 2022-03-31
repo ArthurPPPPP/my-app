@@ -1,61 +1,38 @@
-import React, { FC, useEffect, useState, FormEvent } from "react";
-import { fetchUsers } from "../../api/request";
-import { Loader } from "../../components/Loader/Loader";
+import React, { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { List } from "../../components/List/List";
+import { fetchData } from "../../api/request";
+import { SearchInput } from "../../components/SearchInput/SearchInput";
+import { IUser } from "../../types/types";
 
-const url = ` https://api.github.com/users`;
-
-export const SearchingPage: FC = () => {
+const url = "https://api.github.com/users";
+export const SearchingPage = () => {
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [user, setUser] = useState([]);
-  const getUser = async () => {
-    setIsloading(true);
-    try {
-      const data = await fetchUsers(url + `${searchQuery}`);
-      setUser(data);
-    } catch (e: any) {
-      setError(e);
-    }
-    setIsloading(false);
-  };
+  const [userData, setUserData] = useState<IUser>(Object);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  let userQuery = searchParams.get("user");
 
-  const setInputValue = (e: React.FormEvent<HTMLInputElement>) => {
-    setSearchQuery(e.currentTarget.value);
-  };
-  console.log(user);
-  /*/
-  let [userData, setUserData] = useState<any>(null);
-  let [searchParams, setSearchParams] = useSearchParams();
-  let user = searchParams.get("user");
+  const navigate = useNavigate();
 
-  let abortController = new AbortController();
-
-  useEffect(() => {
-    async function getGitHubUser() {
-      let response = await fetch(`https://api.github.com/users/${user}`, {
-        headers: {
-          Authorization: "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",
-        },
-        signal: abortController.signal,
-      });
-
-      if (!abortController.signal.aborted) {
-        let data = await response.json();
+  const getGitHubUser = async () => {
+    if (userQuery !== null) {
+      setIsloading(true);
+      try {
+        const data = await fetchData(url + `/${userQuery}`);
         setUserData(data);
+      } catch (e: any) {
+        setError(e);
       }
+      setIsloading(false);
     }
-    if (user) {
-      getGitHubUser();
-    }
-    return () => {
-      abortController.abort();
-    };
-  }, [user]);
+  };
+
+  useEffect(() => {
+    getGitHubUser();
+  }, [userQuery]);
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     let formData = new FormData(event.currentTarget);
@@ -64,17 +41,19 @@ export const SearchingPage: FC = () => {
     setSearchParams({ user: newUser });
   }
 
-  console.log(userData);
-/*/
+  const navigation = () => {
+    navigate("/repos", { state: { userData } });
+  };
+  console.log(userQuery);
   return (
     <div>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div>
-          <input type="search" onChange={setInputValue} />
-        </div>
-      )}
+      <SearchInput
+        handleSubmit={handleSubmit}
+        inputValue={userQuery}
+        button={true}
+        placeholder={"Search for Users"}
+      />
+      {userData && <List userData={userData} onClickHandler={navigation} />}
     </div>
   );
 };

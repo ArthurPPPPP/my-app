@@ -1,0 +1,22 @@
+.repoListItem,
+a {
+  display: flex;
+  width: 100%;
+  max-width: 750px;
+  justify-content: center;
+  text-decoration: none;
+  list-style: none;
+}
+.repoItem {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border: solid 1px rgb(170, 170, 170);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-width: 1px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
