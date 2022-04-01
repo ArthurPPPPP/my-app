@@ -12,7 +12,7 @@ export const UserInfo: FC<propTypes> = ({ userData }) => {
         <div className={styles.avatar}>
           <img src={userData.avatar_url} alt="Avatar" />
         </div>
-        <div>
+        <div className={styles.userInfo}>
           <p>Username: {userData.login}</p>
           <p>
             Email: {userData.email === null ? "Email is hiden" : userData.email}

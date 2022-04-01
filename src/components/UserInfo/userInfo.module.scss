@@ -1,22 +1,27 @@
 .wrapper {
   display: flex;
-  width: 100%;
+  width: 100vw;
   justify-content: center;
 }
 .userCard {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: row;
-  max-width: 600px;
+  max-width: 700px;
+  border: solid 1px black;
   .avatar {
     display: flex;
     justify-content: center;
-
+    height: auto;
+    border: solid 1px black;
     img {
+      display: flex;
       width: 100%;
-      max-width: 180px;
       height: auto;
+      max-width: 150px;
     }
+  }
+  .userInfo {
   }
 }

@@ -4,12 +4,11 @@ import { List } from "../../components/List/List";
 import { fetchData } from "../../api/request";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { IUser } from "../../types/types";
-
+import styles from "./searchingPage.module.scss";
 const url = "https://api.github.com/users";
 export const SearchingPage = () => {
-  const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
-  const [userData, setUserData] = useState<IUser>(Object);
+  const [userData, setUserData] = useState<IUser | undefined>(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
 
   let userQuery = searchParams.get("user");
@@ -18,14 +17,12 @@ export const SearchingPage = () => {
 
   const getGitHubUser = async () => {
     if (userQuery !== null) {
-      setIsloading(true);
       try {
         const data = await fetchData(url + `/${userQuery}`);
         setUserData(data);
       } catch (e: any) {
         setError(e);
       }
-      setIsloading(false);
     }
   };
 
@@ -44,16 +41,17 @@ export const SearchingPage = () => {
   const navigation = () => {
     navigate("/repos", { state: { userData } });
   };
-  console.log(userQuery);
   return (
-    <div>
-      <SearchInput
-        handleSubmit={handleSubmit}
-        inputValue={userQuery}
-        button={true}
-        placeholder={"Search for Users"}
-      />
-      {userData && <List userData={userData} onClickHandler={navigation} />}
-    </div>
+    <main className={styles.mainWrapper}>
+      <div className={styles.searchingPage}>
+        <SearchInput
+          handleSubmit={handleSubmit}
+          inputValue={userQuery}
+          button={true}
+          placeholder={"Search for Users"}
+        />
+        {userData && <List userData={userData} onClickHandler={navigation} />}
+      </div>
+    </main>
   );
 };

@@ -1,0 +1,12 @@
+body,
+* {
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: solid 1px red;
+}

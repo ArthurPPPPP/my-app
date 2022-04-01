@@ -1,20 +1,25 @@
 .listItem {
-  border: solid 1px rgb(170, 170, 170);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-width: 1px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  :hover {
-    cursor: pointer;
-  }
   display: flex;
-  width: 100%;
-  max-width: 750px;
+  width: 100vw;
+  height: auto;
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  border: solid 1px black;
+
+  :hover {
+    cursor: pointer;
+  }
+  .container {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: flex;
+    width: 100%;
+    max-width: 700px;
+    border: solid 1px black;
+  }
 
   .picture {
     display: flex;

@@ -1,0 +1,13 @@
+.mainWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  .searchingPage {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+  }
+}
