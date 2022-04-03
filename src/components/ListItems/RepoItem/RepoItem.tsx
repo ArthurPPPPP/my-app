@@ -1,13 +1,12 @@
 import React, { FC } from "react";
 import styles from "./repo.module.scss";
+import { IRepo } from "../../../types/types";
 
 interface propTypes {
-  reposData: any;
+  reposData: IRepo;
 }
 
 export const RepoItem: FC<propTypes> = ({ reposData }) => {
-  console.log("RepoItem", reposData);
-
   return (
     <li className={styles.repoListItem}>
       <a href={reposData.clone_url} target="_blank">

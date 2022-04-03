@@ -9,12 +9,10 @@
   justify-content: space-evenly;
   flex-direction: row;
   max-width: 700px;
-  border: solid 1px black;
   .avatar {
     display: flex;
     justify-content: center;
     height: auto;
-    border: solid 1px black;
     img {
       display: flex;
       width: 100%;
@@ -22,6 +20,5 @@
       max-width: 150px;
     }
   }
-  .userInfo {
-  }
+
 }

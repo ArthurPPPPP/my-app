@@ -13,7 +13,7 @@ export const List: FC<props> = ({ userData, reposData, onClickHandler }) => {
   return (
     <ul className={styles.list}>
       {reposData ? (
-        reposData?.map((n: any) => <RepoItem reposData={n} key={n.id} />)
+        reposData?.map((n: IRepo) => <RepoItem reposData={n} key={n.id} />)
       ) : (
         <UserItem userData={userData} onClickHandler={onClickHandler} />
       )}

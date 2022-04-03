@@ -5,11 +5,13 @@ import { fetchData } from "../../api/request";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { IUser } from "../../types/types";
 import styles from "./searchingPage.module.scss";
-const url = "https://api.github.com/users";
+import { Loader } from "../../components/Loader/Loader";
+
 export const SearchingPage = () => {
   const [error, setError] = useState(null);
   const [userData, setUserData] = useState<IUser | undefined>(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   let userQuery = searchParams.get("user");
 
@@ -17,12 +19,16 @@ export const SearchingPage = () => {
 
   const getGitHubUser = async () => {
     if (userQuery !== null) {
+      setIsLoading(true);
       try {
-        const data = await fetchData(url + `/${userQuery}`);
+        const data = await fetchData(
+          `https://api.github.com/users/${userQuery}`
+        );
         setUserData(data);
       } catch (e: any) {
         setError(e);
       }
+      setIsLoading(false);
     }
   };
 
@@ -38,19 +44,30 @@ export const SearchingPage = () => {
     setSearchParams({ user: newUser });
   }
 
-  const navigation = () => {
+  const onOpenRepo = () => {
     navigate("/repos", { state: { userData } });
   };
+
+  const isFound = (user: IUser | undefined) => {
+    if (userData?.hasOwnProperty("message")) {
+      return <h1> User not found !</h1>;
+    } else {
+      return <List userData={userData} onClickHandler={onOpenRepo} />;
+    }
+  };
+
+  const renderedComponent = isFound(userData);
+
   return (
     <main className={styles.mainWrapper}>
       <div className={styles.searchingPage}>
         <SearchInput
-          handleSubmit={handleSubmit}
+          handlerSubmit={handleSubmit}
           inputValue={userQuery}
           button={true}
           placeholder={"Search for Users"}
         />
-        {userData && <List userData={userData} onClickHandler={navigation} />}
+        {isLoading ? <Loader /> : userData && renderedComponent}
       </div>
     </main>
   );

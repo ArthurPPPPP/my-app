@@ -5,49 +5,55 @@ import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { UserInfo } from "../../components/UserInfo/UserInfo";
 import { fetchData } from "../../api/request";
 import { IRepo } from "../../types/types";
+import { Loader } from "../../components/Loader/Loader";
+
 export const ReposPage = () => {
   const [searchValue, setsearchValue] = useState("");
   const [reposData, setreposData] = useState<IRepo[]>([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const location: any = useLocation();
 
   const getReposData = async () => {
     try {
-      const data = await fetchData(`${location.state.userData.repos_url}`);
+      setIsLoading(true);
+      const data = await fetchData(location.state.userData.repos_url);
       setreposData(data);
-    } catch (e: any) {}
+    } catch (e: any) {
+      setError(e);
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
     getReposData();
   }, []);
-  const searchHandler = (value: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (value: React.ChangeEvent<HTMLInputElement>) => {
     setsearchValue(value.target.value);
   };
-  function filter() {
-    let filteredRepos: IRepo[] = [];
+  const handlerSearch = (repos: IRepo[]) => {
     if (reposData) {
-      filteredRepos = reposData.filter((repo: any) => {
+      return repos.filter((repo: IRepo) => {
         return repo.name.toLowerCase().includes(searchValue.toLowerCase());
       });
     }
-    return filteredRepos;
-  }
+  };
+  const filteredRepos = handlerSearch(reposData);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-  console.log("RRRRR", reposData);
   return (
     <div>
       <UserInfo userData={location.state.userData} />
       <SearchInput
-        onChangeHandler={searchHandler}
-        handleSubmit={handleSubmit}
+        onChangeHandler={onChangeHandler}
+        handlerSubmit={handlerSubmit}
         button={false}
         placeholder={"Search for User`s repositories"}
       />
-      <List reposData={filter()} />
+      {isLoading ? <Loader /> : <List reposData={filteredRepos} />}
     </div>
   );
 };
