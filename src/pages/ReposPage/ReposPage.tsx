@@ -60,7 +60,3 @@ export const ReposPage = () => {
     </div>
   );
 };
-/*/
-
-
-/*/
