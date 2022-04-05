@@ -1,15 +1,15 @@
 import React, { FC, FormEventHandler } from "react";
 import styles from "./searchInput.module.scss";
 interface props {
-  handleSubmit?: FormEventHandler;
+  handlerSubmit?: FormEventHandler;
   inputValue?: string | null;
-  onChangeHandler?: any;
+  onChangeHandler?: (value: React.ChangeEvent<HTMLInputElement>) => void;
   button?: boolean;
   placeholder: string;
 }
 
 export const SearchInput: FC<props> = ({
-  handleSubmit,
+  handlerSubmit,
   inputValue,
   onChangeHandler,
   button,
@@ -17,7 +17,7 @@ export const SearchInput: FC<props> = ({
 }) => {
   return (
     <div className={styles.inputWrapper}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handlerSubmit}>
         <label>
           <input
             defaultValue={inputValue ?? ""}
@@ -26,8 +26,8 @@ export const SearchInput: FC<props> = ({
             onChange={onChangeHandler}
             placeholder={placeholder}
           />
+          {button ? <button type="submit">Search</button> : <></>}
         </label>
-        {button ? <button type="submit">Search</button> : <></>}
       </form>
     </div>
   );

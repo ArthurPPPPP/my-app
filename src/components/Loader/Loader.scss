@@ -23,6 +23,7 @@ body {
   transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
+  pointer-events: none;
 }
 .loader:before,
 .loader:after {
@@ -61,7 +62,8 @@ body {
 
 .loader-container {
   display: flex;
-  position: absolute;
+  position: fixed;
+  top: 0;
   width: 100vw;
   height: 100vh;
   justify-content: center;
@@ -69,9 +71,13 @@ body {
   pointer-events: none;
 }
 .loader-background {
+  display: flex;
   position: absolute;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
-  background: gray;
+  background: rgb(158, 158, 158);
   opacity: 0.1;
+  pointer-events: none;
 }

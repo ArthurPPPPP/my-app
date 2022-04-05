@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { List } from "../../components/List/List";
 import { fetchData } from "../../api/request";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { IUser } from "../../types/types";
 import styles from "./searchingPage.module.scss";
+import { Loader } from "../../components/Loader/Loader";
+import { UserItem } from "../../components/Items/UserItem/UserItem";
+
 const url = "https://api.github.com/users";
+
 export const SearchingPage = () => {
-  const [error, setError] = useState(null);
-  const [userData, setUserData] = useState<IUser | undefined>(undefined);
+  const [error, setError] = useState<unknown>(null);
+  const [userData, setUserData] = useState<IUser | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   let userQuery = searchParams.get("user");
 
@@ -17,18 +21,20 @@ export const SearchingPage = () => {
 
   const getGitHubUser = async () => {
     if (userQuery !== null) {
+      setIsLoading(true);
       try {
-        const data = await fetchData(url + `/${userQuery}`);
+        const data = await fetchData(`${url}/${userQuery}`);
         setUserData(data);
-      } catch (e: any) {
+      } catch (e) {
         setError(e);
       }
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     getGitHubUser();
-  }, [userQuery]);
+  }, [searchParams]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -38,20 +44,28 @@ export const SearchingPage = () => {
     setSearchParams({ user: newUser });
   }
 
-  const navigation = () => {
+  const onOpenRepo = () => {
     navigate("/repos", { state: { userData } });
   };
+
+  const renderUserList = () => {
+    if (userData?.hasOwnProperty("message")) {
+      return <h1> User not found !</h1>;
+    } else {
+      return <UserItem userData={userData} onClickHandler={onOpenRepo} />;
+    }
+  };
   return (
-    <main className={styles.mainWrapper}>
+    <div className={styles.pageWrapper}>
       <div className={styles.searchingPage}>
         <SearchInput
-          handleSubmit={handleSubmit}
+          handlerSubmit={handleSubmit}
           inputValue={userQuery}
           button={true}
           placeholder={"Search for Users"}
         />
-        {userData && <List userData={userData} onClickHandler={navigation} />}
+        {isLoading ? <Loader /> : userData && renderUserList()}
       </div>
-    </main>
+    </div>
   );
 };

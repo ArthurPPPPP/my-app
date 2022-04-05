@@ -7,19 +7,21 @@
   form {
     display: flex;
     justify-content: center;
-    border: solid 1px black;
     width: 100%;
-
-    input {
+    label {
       display: flex;
-      height: 30px;
-
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-      border-width: 1px;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
+      width: 100%;
+      justify-content: center;
+      input {
+        display: flex;
+        height: 30px;
+        width: 100%;
+        max-width: 500px;
+        border-width: 1px;
+        border-radius: 5px;
+      }
     }
+
     button {
       background-color: white;
       border-top-right-radius: 5px;

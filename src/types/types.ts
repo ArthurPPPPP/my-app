@@ -7,6 +7,8 @@ export interface IUser {
   created_at: number;
   followers: number;
   following: number;
+  bio: string;
+  message?: string;
 }
 
 export interface IRepo {
@@ -14,4 +16,5 @@ export interface IRepo {
   forks_count: string;
   stargazers_count: string;
   clone_url: string;
+  id: number;
 }
