@@ -1,7 +1,8 @@
 .wrapper {
   display: flex;
   width: 100vw;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .userCard {
   display: flex;
@@ -20,5 +21,4 @@
       max-width: 150px;
     }
   }
-
 }

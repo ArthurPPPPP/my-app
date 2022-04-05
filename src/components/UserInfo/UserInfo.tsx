@@ -21,9 +21,8 @@ export const UserInfo: FC<propTypes> = ({ userData }) => {
           <p>Followers: {userData.followers}</p>
           <p>Following: {userData.following}</p>
         </div>
-
-        <span></span>
       </div>
+      <p>bio:{userData.bio}</p>
     </div>
   );
 };

@@ -7,6 +7,7 @@ export interface IUser {
   created_at: number;
   followers: number;
   following: number;
+  bio: string;
   message?: string;
 }
 

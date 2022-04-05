@@ -1,9 +1,8 @@
 .repoListItem,
 a {
   display: flex;
-  width: 100%;
-  max-width: 750px;
-  justify-content: center;
+  width: 100vw;
+justify-content: center;
   text-decoration: none;
   list-style: none;
 }
@@ -13,11 +12,10 @@ a {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  max-width: 750px;
   border: solid 1px rgb(170, 170, 170);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 5px;
   border-width: 1px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  padding: 5px 5px 5px 5px;
+  padding: 5px;
+  color: black;
 }

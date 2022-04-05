@@ -3,7 +3,7 @@ import styles from "./searchInput.module.scss";
 interface props {
   handlerSubmit?: FormEventHandler;
   inputValue?: string | null;
-  onChangeHandler?: any;
+  onChangeHandler?: (value: React.ChangeEvent<HTMLInputElement>) => void;
   button?: boolean;
   placeholder: string;
 }

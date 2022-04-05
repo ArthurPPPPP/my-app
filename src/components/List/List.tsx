@@ -1,22 +1,22 @@
 import React, { FC } from "react";
-import { UserItem } from "../ListItems/UserItem/UserItem";
-import { RepoItem } from "../ListItems/RepoItem/RepoItem";
 import styles from "./list.module.scss";
-import { IUser } from "../../types/types";
+
 import { IRepo } from "../../types/types";
+import { RepoItem } from "../Items/RepoItem/RepoItem";
+
+
 interface props {
-  userData?: IUser;
-  reposData?: IRepo[];
+  reposData: IRepo[];
   onClickHandler?: ((event: React.MouseEvent) => void) | undefined;
 }
-export const List: FC<props> = ({ userData, reposData, onClickHandler }) => {
+
+export const List: FC<props> = ({ reposData, onClickHandler }) => {
   return (
+
     <ul className={styles.list}>
-      {reposData ? (
-        reposData?.map((n: IRepo) => <RepoItem reposData={n} key={n.id} />)
-      ) : (
-        <UserItem userData={userData} onClickHandler={onClickHandler} />
-      )}
+      {reposData.map((n: IRepo) => (
+        <RepoItem reposData={n} key={n.id} />
+      ))}
     </ul>
   );
-};
+      }
